@@ -7,6 +7,7 @@ This is an official release of the paper **Personalizing Federated Medical Image
 <div align="center" border=> <img src=frame.png width="700" > </div>
 
 ## News
+- **[7/11 2022] We have released the pre-trained weights on the polyp segmentation.**
 - **[7/4 2022] We have released the pre-processing scripts.**
 - **[7/4 2022] We have created this repo.**
 
@@ -15,7 +16,7 @@ This is an official release of the paper **Personalizing Federated Medical Image
 - [x] Network
 - [x] Pre-processing
 - [ ] Training Codes
-- [ ] Pretrained Weights
+- [x] Pretrained Weights
 
 For more details or any questions, please feel easy to contact us by email (jiachengw@stu.xmu.edu.cn).
 
@@ -35,12 +36,10 @@ Please download the pre-trained weights from Baidu Disk (https://pan.baidu.com/s
 
 Rename the directory as `logs/{dataset}/{exp_name}/model/`.
 
-Run the test script `test.py`
-
-
+Run the test script `test.py`.
 
 ### Result
-TODO
+<div align="center" border=> <img src=result.png width="700" > </div>
 
 ## Citation
 
