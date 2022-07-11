@@ -18,7 +18,7 @@ from scipy.ndimage.morphology import distance_transform_edt, binary_erosion,\
 class Dataset(Dataset):
     """ PMR Dataset """
     def __init__(self, client_idx=None, split='train', transform=None):
-        self.root_dir = '/raid/wjc/data/SpecializedFedSeg/pmr/'
+        self.root_dir = ''  # todo
         self.transform = transform
         self.split = split
         self.client_name = [

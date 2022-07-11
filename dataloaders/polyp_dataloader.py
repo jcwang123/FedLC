@@ -17,7 +17,7 @@ from scipy.ndimage.morphology import distance_transform_edt, binary_erosion,\
 class Dataset(Dataset):
     """ LA Dataset """
     def __init__(self, client_idx=None, split='train', transform=None):
-        self.root_dir = '/raid/wjc/data/SpecializedFedSeg/polyp/'
+        self.root_dir = ''  # todo
         self.transform = transform
         self.split = split
         self.client_name = ['Site1', 'Site2', 'Site3', 'Site4']
