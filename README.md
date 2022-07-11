@@ -31,7 +31,13 @@ After downloading the data resources, please run the file `utils/prepare_dataset
 TODO
 
 ### Testing
-TODO
+Please download the pre-trained weights from Baidu Disk (https://pan.baidu.com/s/10HkQ90xeFcHMaNgfIyT0iw, a1sm) and put them in the project directory.
+
+Rename the directory as `logs/{dataset}/{exp_name}/model/`.
+
+Run the test script `test.py`
+
+
 
 ### Result
 TODO
