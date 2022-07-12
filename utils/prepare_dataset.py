@@ -31,8 +31,7 @@ def mr_norm(x, r=0.99):
     return x
 
 
-def prepare_pmr(save_dir):
-    ori_dir = '/raid/wjc/data/PMR'
+def prepare_pmr(save_dir, ori_dir):
     site_names = os.listdir(ori_dir)
     site_names.sort()
     for i in range(len(site_names)):
@@ -72,9 +71,8 @@ def prepare_pmr(save_dir):
             print(cnt)
 
 
-def prepare_fundus(save_dir):
+def prepare_fundus(save_dir, ori_dir):
     #  download fundus data to $ori_dir
-    ori_dir = '/raid/wjc/data/Fundus'
     for site_index in range(1, 5):
         image_paths = glob(ori_dir +
                            '/Site{}/*/ROIs/image/*.png'.format(site_index))
@@ -98,9 +96,8 @@ def prepare_fundus(save_dir):
                     site_p, train_or_test, file_name))
 
 
-def prepare_polyp(save_dir):
+def prepare_polyp(save_dir, ori_dir):
     #  download fundus data to $ori_dir
-    ori_dir = '/raid/wjc/data/polyp'
     site_names = ['Kvasir', 'ETIS', 'CVC-ColonDB', 'CVC-ClinicDB']
 
     #   221:273
@@ -108,35 +105,33 @@ def prepare_polyp(save_dir):
         # train
         image_paths = [[], [], [], []]
         if train_or_test == 'train':
-            for image_path in glob(
-                    '/raid/wjc/data/polyp/TrainDataset/images/*'):
+            for image_path in glob(ori_dir + '/TrainDataset/images/*'):
                 if image_path.split('/')[-1][0] == 'c':
                     image_paths[0].append(image_path)
                 else:
                     image_paths[-1].append(image_path)
             image_paths[2] = [
-                '/raid/wjc/data/polyp/TestDataset/CVC-ColonDB/images/{}.png'.
-                format(i) for i in range(1, 221)
+                ori_dir + '/TestDataset/CVC-ColonDB/images/{}.png'.format(i)
+                for i in range(1, 221)
             ] + [
-                '/raid/wjc/data/polyp/TestDataset/CVC-ColonDB/images/{}.png'.
-                format(i) for i in range(273, 380)
+                ori_dir + '/TestDataset/CVC-ColonDB/images/{}.png'.format(i)
+                for i in range(273, 380)
             ]
             image_paths[1] = [
-                '/raid/wjc/data/polyp/TestDataset/CVC-ColonDB/images/{}.png'.
-                format(i) for i in range(1, 171)
+                ori_dir + '/TestDataset/CVC-ColonDB/images/{}.png'.format(i)
+                for i in range(1, 171)
             ]
         else:
-            image_paths[0] = glob(
-                '/raid/wjc/data/polyp/TestDataset/Kvasir/images/*')
-            image_paths[-1] = glob(
-                '/raid/wjc/data/polyp/TestDataset/CVC-ClinicDB/images/*')
+            image_paths[0] = glob(ori_dir + '/TestDataset/Kvasir/images/*')
+            image_paths[-1] = glob(ori_dir +
+                                   '/TestDataset/CVC-ClinicDB/images/*')
             image_paths[2] = [
-                '/raid/wjc/data/polyp/TestDataset/CVC-ColonDB/images/{}.png'.
-                format(i) for i in range(221, 273)
+                ori_dir + '/TestDataset/CVC-ColonDB/images/{}.png'.format(i)
+                for i in range(221, 273)
             ]
             image_paths[1] = [
-                '/raid/wjc/data/polyp/TestDataset/CVC-ColonDB/images/{}.png'.
-                format(i) for i in range(171, 197)
+                ori_dir + '/TestDataset/CVC-ColonDB/images/{}.png'.format(i)
+                for i in range(171, 197)
             ]
         for i, site_name in enumerate(site_names):
             for image_path in image_paths[i]:
@@ -162,6 +157,5 @@ def prepare_polyp(save_dir):
 
 
 if __name__ == '__main__':
-    # prepare_fundus(save_dir='/raid/wjc/data/SpecializedFedSeg')
-    # prepare_pmr(save_dir='/raid/wjc/data/SpecializedFedSeg')
-    prepare_polyp(save_dir='/raid/wjc/data/SpecializedFedSeg')
+    # TODO
+    prepare_fundus(save_dir='', ori_dir='')
