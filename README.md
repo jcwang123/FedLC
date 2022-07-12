@@ -4,7 +4,13 @@
 
 This is an official release of the paper **Personalizing Federated Medical Image Segmentation via Local Calibration**, including the network implementation and the training scripts.
 
+> [**Personalizing Federated Medical Image Segmentation**](https://arxiv.org/abs/2207.04655),   <br/>
+> **Jiacheng Wang**, Yueming Jin, Liansheng Wang <br/>
+> In: European Conference on Computer Vision (ECCV), 2022  <br/>
+> [[arXiv](https://arxiv.org/abs/2207.04655)][[Bibetex](https://github.com/jcwang123、FedLC#citation)]
+
 <div align="center" border=> <img src=frame.png width="700" > </div>
+
 
 ## News
 - **[7/11 2022] We have released the pre-trained weights on the polyp segmentation.**
@@ -42,5 +48,14 @@ Run the test script `test.py`.
 <div align="center" border=> <img src=result.png width="700" > </div>
 
 ## Citation
-
+```
 If you find LC-Fed useful in your research, please consider citing:
+@misc{wang2022personalizing,
+      title={Personalizing Federated Medical Image Segmentation via Local Calibration}, 
+      author={Jiacheng Wang and Yueming Jin and Liansheng Wang},
+      year={2022},
+      eprint={2207.04655},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+```
