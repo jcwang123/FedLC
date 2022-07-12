@@ -13,6 +13,7 @@ This is an official release of the paper **Personalizing Federated Medical Image
 
 
 ## News
+- **[7/12 2022] We have released the pre-print manuscript.**
 - **[7/11 2022] We have released the pre-trained weights on the polyp segmentation.**
 - **[7/4 2022] We have released the pre-processing scripts.**
 - **[7/4 2022] We have created this repo.**
