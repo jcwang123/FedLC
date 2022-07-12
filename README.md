@@ -4,7 +4,7 @@
 
 This is an official release of the paper **Personalizing Federated Medical Image Segmentation via Local Calibration**, including the network implementation and the training scripts.
 
-> [**Personalizing Federated Medical Image Segmentation**](https://arxiv.org/abs/2207.04655),   <br/>
+> [**Personalizing Federated Medical Image Segmentation via Local Calibration**](https://arxiv.org/abs/2207.04655),   <br/>
 > **Jiacheng Wang**, Yueming Jin, Liansheng Wang <br/>
 > In: European Conference on Computer Vision (ECCV), 2022  <br/>
 > [[arXiv](https://arxiv.org/abs/2207.04655)][[Bibetex](https://github.com/jcwang123、FedLC#citation)]
