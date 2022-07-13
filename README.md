@@ -46,7 +46,7 @@ Rename the directory as `logs/{dataset}/{exp_name}/model/`.
 Run the test script `test.py`.
 
 ### Result
-The test <br>IoU</br> scores and <br>ASSD</br> scores on the Polyp dataset are:
+The test **IoU** scores and **ASSD** scores on the Polyp dataset are:
 
 <div align="center" border=> <img src=result.png width="700" > </div>
 
