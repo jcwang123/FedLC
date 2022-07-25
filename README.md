@@ -7,7 +7,7 @@ This is an official release of the paper **Personalizing Federated Medical Image
 > [**Personalizing Federated Medical Image Segmentation via Local Calibration**](https://arxiv.org/abs/2207.04655),   <br/>
 > **Jiacheng Wang**, Yueming Jin, Liansheng Wang <br/>
 > In: European Conference on Computer Vision (ECCV), 2022  <br/>
-> [[arXiv](https://arxiv.org/abs/2207.04655)][[Bibetex](https://github.com/jcwang123、FedLC#citation)]
+> [[arXiv](https://arxiv.org/abs/2207.04655)][[Bibetex](https://github.com/jcwang123、FedLC#Citation)][[Supp](https://jcwang123.github.io/assets/pdfs/eccv22/supp.pdf)]
 
 <div align="center" border=> <img src=frame.png width="700" > </div>
 
@@ -46,11 +46,13 @@ Rename the directory as `logs/{dataset}/{exp_name}/model/`.
 Run the test script `test.py`.
 
 ### Result
+The test **IoU** scores and **ASSD** scores on the Polyp dataset are:
+
 <div align="center" border=> <img src=result.png width="700" > </div>
 
 ## Citation
-```
 If you find LC-Fed useful in your research, please consider citing:
+```
 @misc{wang2022personalizing,
       title={Personalizing Federated Medical Image Segmentation via Local Calibration}, 
       author={Jiacheng Wang and Yueming Jin and Liansheng Wang},
