@@ -13,6 +13,7 @@ This is an official release of the paper **Personalizing Federated Medical Image
 
 
 ## News
+- **[7/12 2022] We have released the training codes.**
 - **[7/12 2022] We have released the pre-print manuscript.**
 - **[7/11 2022] We have released the pre-trained weights on the polyp segmentation.**
 - **[7/4 2022] We have released the pre-processing scripts.**
@@ -22,7 +23,7 @@ This is an official release of the paper **Personalizing Federated Medical Image
 
 - [x] Network
 - [x] Pre-processing
-- [ ] Training Codes
+- [x] Training Codes
 - [x] Pretrained Weights
 
 For more details or any questions, please feel easy to contact us by email (jiachengw@stu.xmu.edu.cn).
