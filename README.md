@@ -55,12 +55,12 @@ The test **IoU** scores and **ASSD** scores on the Polyp dataset are:
 ## Citation
 If you find LC-Fed useful in your research, please consider citing:
 ```
-@misc{wang2022personalizing,
-      title={Personalizing Federated Medical Image Segmentation via Local Calibration}, 
-      author={Jiacheng Wang and Yueming Jin and Liansheng Wang},
-      year={2022},
-      eprint={2207.04655},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
+@inproceedings{wang2022personalizing,
+  title={Personalizing Federated Medical Image Segmentation via Local Calibration},
+  author={Wang, Jiacheng and Jin, Yueming and Wang, Liansheng},
+  booktitle={European Conference on Computer Vision},
+  pages={456--472},
+  year={2022},
+  organization={Springer}
 }
 ```
