@@ -2,7 +2,7 @@ import os
 import sys
 from numpy.lib.npyio import load
 
-sys.path.insert(0, os.path.dirname(__file__))
+sys.path.insert(0, os.path.dirname(__file__) + '/..')
 from scripts.tester_utils import test_normal_unet, test_lc_unet
 
 import torch

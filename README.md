@@ -38,14 +38,14 @@ In this paper, we perform the experiments using three imaging modalities, includ
 After downloading the data resources, please run the file `utils/prepare_dataset.py`. Note that the file directory should be replaced with yours.
 
 ### Training 
-TODO
+Run the train script `$ python scripts/train_lcfed.py`.
 
 ### Testing
 Please download the pre-trained weights from Baidu Disk (https://pan.baidu.com/s/10HkQ90xeFcHMaNgfIyT0iw, a1sm) and put them in the project directory.
 
 Rename the directory as `logs/{dataset}/{exp_name}/model/`.
 
-Run the test script `test.py`.
+Run the test script `$ python scripts/test.py`.
 
 ### Result
 The test **IoU** scores and **ASSD** scores on the Polyp dataset are:
