@@ -13,6 +13,7 @@ This is an official release of the paper **Personalizing Federated Medical Image
 
 
 ## News
+- **[3/1 2023] Codes for Head Calibration are tuned.**
 - **[7/12 2022] We have released the training codes.**
 - **[7/25 2022] We have uploaded the test scripts.**
 - **[7/12 2022] We have released the pre-print manuscript.**
