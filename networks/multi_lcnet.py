@@ -266,6 +266,7 @@ class LC_Fed(nn.Module):
         bs = x.size(0)
         _emb = self.get_current_emb(site_index, bs)
         fea, preds, _ = self.unet(x, _emb)
+        # print(self.if_hc)
         if self.if_hc:
             uncertainty = self.get_un_map_by_head(site_index, fea, seg_heads)
             if rt_info:
@@ -306,6 +307,7 @@ class LC_Fed(nn.Module):
         if stage == 0:
             assert seg_heads is None
             fea, pred, hmap = self.unet(x, _emb)
+
             return pred, hmap
         elif stage == 1:
             assert self.hc is not None

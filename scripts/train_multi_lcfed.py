@@ -38,7 +38,10 @@ from dataloaders.fundus_dataloader import Dataset, RandomNoise
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--exp', type=str, default='test', help='model_name')
-parser.add_argument('--dataset', type=str, default='pmr', help='dataset name')
+parser.add_argument('--dataset',
+                    type=str,
+                    default='polyp',
+                    help='dataset name')
 
 parser.add_argument('--head_iter',
                     type=int,
@@ -180,7 +183,7 @@ if __name__ == "__main__":
     c_loss_func = nn.MSELoss()
 
     for epoch_num in range(max_epoch):
-        # seg_heads = copy.deepcopy([_net.unet.seg1 for _net in net_clients])
+        seg_heads = copy.deepcopy([_net.unet.seg1 for _net in net_clients])
         for client_idx in range(args.client_num):
             dataloader_current = dataloader_clients[client_idx]
             net_current = net_clients[client_idx]

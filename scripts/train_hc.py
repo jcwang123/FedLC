@@ -15,10 +15,12 @@ from glob import glob
 
 import torch
 import torch.nn as nn
+from torch.autograd import Variable
+from torchvision import transforms
 from torch.utils.data import DataLoader
 
 # network codes
-from networks.lcrepnet import LC_Fed
+from networks.multi_lcnet import LC_Fed
 #
 #
 #
@@ -36,10 +38,7 @@ from dataloaders.fundus_dataloader import Dataset, RandomNoise
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--exp', type=str, default='test', help='model_name')
-parser.add_argument('--dataset',
-                    type=str,
-                    default='fundus',
-                    help='dataset name')
+parser.add_argument('--dataset', type=str, default='pmr', help='dataset name')
 
 parser.add_argument('--head_iter',
                     type=int,
@@ -71,15 +70,19 @@ parser.add_argument('--alpha',
 parser.add_argument('--norm', type=str, default='in', help='normalization')
 
 parser.add_argument('--pcs', type=int, default=1, help='using pcs')
+parser.add_argument('--pcs_n',
+                    type=int,
+                    default=1,
+                    help='using n layers of pcs')
 
-parser.add_argument('--hc', type=int, default=1, help='using hc')
+parser.add_argument('--hc', type=int, default=0, help='using hc')
 
 parser.add_argument('--seed', type=int, default=1337, help='random seed')
-parser.add_argument('--gpu', type=str, default='4', help='GPU to use')
+parser.add_argument('--gpu', type=str, default='0', help='GPU to use')
 args = parser.parse_args()
 
-args.exp = args.exp + '_pcs_{}_hc_{}_{}_alpha_{}'.format(
-    args.pcs, args.hc, args.norm, args.alpha)
+args.exp = args.exp + '_pcs_{}_pcsn_{}_hc_{}_{}_alpha_{}'.format(
+    args.pcs, args.pcs_n, args.hc, args.norm, args.alpha)
 
 txt_path = 'logs/{}/{}/txt/'.format(args.dataset, args.exp)
 log_path = 'logs/{}/{}/log/'.format(args.dataset, args.exp)
@@ -132,8 +135,10 @@ if __name__ == "__main__":
         net = LC_Fed(args)
         net = net.cuda()
 
-        if args.load_weight:
-            pass
+        from utils.util import load_model
+        p = ''  # load your pretrained net from this path
+
+        net = load_model(net, p, True)
 
         dataset = Dataset(client_idx=client_idx, split='train', transform=None)
         dataloader = DataLoader(dataset,
@@ -168,10 +173,6 @@ if __name__ == "__main__":
     print(global_keys)
     print(ignored_keys)
 
-    if args.load_weight:
-        # update_global_model(net_clients, client_weight)
-        update_global_model_with_keys(net_clients, client_weight, global_keys)
-
     print('[INFO] Initialized success...')
 
     # start federated learning
@@ -180,7 +181,7 @@ if __name__ == "__main__":
     lr_ = base_lr
 
     c_loss_func = nn.MSELoss()
-    alpha = 1
+
     for epoch_num in range(max_epoch):
         seg_heads = copy.deepcopy([_net.unet.seg1 for _net in net_clients])
         for client_idx in range(args.client_num):
@@ -202,56 +203,29 @@ if __name__ == "__main__":
                     set_global_grad(net_current, global_keys, False)
                 else:
                     set_global_grad(net_current, global_keys, True)
-                pred, x5, hmap = net_current(volume_batch, client_idx, 0, None)
+
+                pred, hmap = net_current(volume_batch, client_idx, 1,
+                                         seg_heads)
                 s1_loss = dice_loss(pred, label_batch)
 
-                hmaps = net_current.get_hmaps(x5.detach())
-                c_loss = 0
-                for other_client in range(args.client_num):
-                    if not other_client == client_idx:
-                        c_loss += c_loss_func(hmaps[client_idx],
-                                              hmaps[other_client].detach())
-                c_loss = -c_loss / (args.client_num - 1)
-
-                s1_loss = s1_loss + c_loss * args.alpha
                 optimizer_current.zero_grad()
                 s1_loss.backward()
                 optimizer_current.step()
 
-                # train calibration net
-                if args.hc:
-                    pred, x5, hmap = net_current(volume_batch, client_idx, 1,
-                                                 seg_heads)
-                    s2_loss = dice_loss(pred, label_batch)
-                    optimizer_current.zero_grad()
-                    s2_loss.backward()
-                    optimizer_current.step()
-
                 iter_num = len(dataloader_current) * epoch_num + i_batch
 
                 if iter_num % 10 == 0:
-                    if args.hc:
-                        writer.add_scalar('loss/site{}'.format(client_idx + 1),
-                                          s2_loss, iter_num)
-                    else:
-                        writer.add_scalar('loss/site{}'.format(client_idx + 1),
-                                          s1_loss, iter_num)
-                    if args.hc:
-                        print(
-                            'Epoch: [%d] client [%d] iteration [%d / %d] : s1 loss : %f s2 loss : %f'
-                            % (epoch_num, client_idx, i_batch,
-                               len(dataloader_current), s1_loss.item(),
-                               s2_loss.item()))
-                    else:
-                        print(
-                            'Epoch: [%d] client [%d] iteration [%d / %d] : s1 loss : %f '
-                            % (epoch_num, client_idx, i_batch,
-                               len(dataloader_current), s1_loss.item()))
+                    writer.add_scalar('loss/site{}'.format(client_idx + 1),
+                                      s1_loss, iter_num)
+                    print(
+                        'Epoch: [%d] client [%d] iteration [%d / %d] : s1 loss : %f '
+                        % (epoch_num, client_idx, i_batch,
+                           len(dataloader_current), s1_loss.item()))
 
-        ## model aggregation
+        # model aggregation
         update_global_model_with_keys(net_clients, client_weight, global_keys)
 
-        ## evaluation
+        # evaluation
         overall_score = 0
         for site_index in range(args.client_num):
             this_net = net_clients[site_index]
@@ -268,7 +242,7 @@ if __name__ == "__main__":
 
         if overall_score > best_score:
             best_score = overall_score
-            ## save model
+            # save model
             save_mode_path = os.path.join(model_path, 'best.pth')
             torch.save(net_clients[0].state_dict(), save_mode_path)
 
